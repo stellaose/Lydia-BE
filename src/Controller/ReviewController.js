@@ -39,7 +39,7 @@ const ReviewController = {
             const addReviews = await Reviews.create({...review, serviceId})
             if(addReviews){
                 return res
-                .status(400)
+                .status(200)
                 .json({message: 'Review successfully added',
                         data: addReviews})
             } else{
