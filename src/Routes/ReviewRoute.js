@@ -4,10 +4,10 @@ import Auth from '../Middleware/Auth.js';
 
 const router = Router();
 
-router.post('/service/:serviceId/reviews', ReviewController.postReviews);
-router.delete('/service/:serviceId/reviews', Auth, ReviewController.deleteReviews);
-router.get('/service/reviews', ReviewController.getReviews);
+router.post('/:serviceId/reviews', ReviewController.postReviews);
+router.delete('/:serviceId/reviews', Auth, ReviewController.deleteReviews);
+router.get('/reviews', ReviewController.getReviews);
 
-router.delete('/service/serviceId/review/:reviewId', Auth, ReviewController.deleteReview);
+router.delete('/serviceId/review/:reviewId', Auth, ReviewController.deleteReview);
 
 export default router;

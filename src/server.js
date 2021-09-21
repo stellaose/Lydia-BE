@@ -18,7 +18,7 @@ app.get('/',  (req, res) => {
   });
 
 app.use('/', UserRoute);
-app.use('/', ServiceRoute)
-app.use('/', ReviewRoute);
+app.use('/service', ServiceRoute)
+app.use('/service', ReviewRoute);
 
 export default app;
