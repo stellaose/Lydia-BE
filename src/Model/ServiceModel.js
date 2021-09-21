@@ -4,11 +4,6 @@ const Schema = mongoose.Schema;
 
 const serviceSchema = new Schema(
     {
-        serviceId: {
-            type: Number,
-            required: true,
-            min: 0,
-          },
         name: {
             type: String,
             required: true

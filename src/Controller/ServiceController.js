@@ -24,7 +24,7 @@ const ServiceController = {
             const { serviceId } = req.params;
             const Service = req.body;
 
-            const update = await Services.findOneAndUpdate({ serviceId }, Service, {
+            const update = await Services.findOneAndUpdate({ _id: serviceId }, Service, {
                 new: true,
             });
 
@@ -82,7 +82,7 @@ const ServiceController = {
             const { serviceId } = req.params;
 
             const getOneService = await Services.findById({ serviceId}).exec();
-            const getReviews = await Reviews.find({ serviceId }).exec();
+            const getReviews = await Reviews.find({ _id: serviceId }).exec();
 
             if (getOneService !== null) {  
               return res

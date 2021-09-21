@@ -4,6 +4,11 @@ const Schema = mongoose.Schema;
 
 const reviewSchema = new Schema(
     {
+        serviceId: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "Service",
+            required: true
+        },
         author: {
             type: String,
             default: "No Name"

@@ -6,7 +6,7 @@ const router = Router();
 
 router.get('/list', ServiceController.getServices);
 router.get('/query', ServiceController.getServicesByQuery);
-router.post('/service/list', ServiceController.postServices);
+router.post('/list', ServiceController.postServices);
 
 router.get('/:serviceId', ServiceController.getService);
 router.patch('/:serviceId', Auth, ServiceController.updateServices);
