@@ -22,15 +22,17 @@ const ReviewController = {
     getReview: async (req, res) => {
         try {
           const { serviceId } = req.params;
+          const { author, title, rating, comment } = req.body;
           const getOneReview = await Reviews
-                                        .findById({ _id: serviceId })
+                                        .find({ _id: serviceId})
                                         .exec();
-
         
-          if (getOneReview) {
+          if (getOneReview !== null) {
             return res
                     .status(200)
-                    .json({message: 'Successful', data: getOneReview })
+                    .json({data: {
+                        getOneReview: [author, title, rating, comment]
+                    }})
                     .end();
           } else {
              return res
@@ -88,7 +90,7 @@ const ReviewController = {
            const { reviewId } = req.params;
           
           const deleteOne = await Reviews
-                            .findByIdAndDelete({ _id: reviewId })  
+                            .findByIdAndDelete({_id: reviewId })  
                             .exec();
          
           if (deleteOne !== null) {
