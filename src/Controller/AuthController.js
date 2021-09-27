@@ -10,10 +10,10 @@ dotenv.config()
 
 const AuthController = {
     signup: async (req, res) => {
-        const { firstname, lastname, username, email, password} = req.body;
+        const { firstname, lastname, email, password} = req.body;
 
         try{
-            if(!firstname || !lastname || !username || !email || !password){
+            if(!firstname || !lastname || !email || !password){
                 return res
                 .status(400)
                 .json({ message: 'Please fill all fields' });
@@ -33,30 +33,24 @@ const AuthController = {
                 .status(400)
                 .json({ message: 'Password must contain alphanumeric characters'});
             }
-            if(username === password){
+            if(firstname === password || lastname === password){
                 return res 
                 .status(400)
-                .json({ message: 'Username and password cannot be a match. Please try a different password'});
+                .json({ message: 'Name(s) and password cannot be a match. Please try a different password'});
             }
 
                 const findUser = await User.findOne({email});
-                const findName = await User.findOne({username});
 
             if(findUser){
                 return res
                 .status(400)
                 .json({ message: 'This user already exist. Please log in'});
             }
-            if(findName){
-                return res
-                .status(400)
-                .json({ message: 'This username has been used already. Try a different username'});
-            }
                 const salt = bcrypt.genSaltSync(10);
                 const hashedPassword = bcrypt.hashSync(password, salt);
 
                 if(hashedPassword){
-                    const newUser = new User({ firstname, lastname, username, email, password: hashedPassword });
+                    const newUser = new User({ firstname, lastname,  email, password: hashedPassword });
                     const savedUser = await newUser.save();
 
                     if (savedUser) {
@@ -78,7 +72,6 @@ const AuthController = {
                                              id: savedUser._id,
                                              firstname: savedUser.firstname,
                                              lastname: savedUser.lastname,
-                                             username: savedUser.username,
                                              email: savedUser.email,
                                              password: savedUser.password,
                                          }, 
@@ -98,17 +91,17 @@ const AuthController = {
     }, 
     
     login: async (req, res) => {
-        const { username, password } = req.body;
+        const { email, password } = req.body;
         
         try {
 
-            if(!username || !password) {
+            if(!email || !password) {
                 return res
                 .status(400)
                 .json({message: 'All fields must be provided'})
             }
            
-            const user = await User.findOne({ username })
+            const user = await User.findOne({ email })
           
             if(user) {
                 if(bcrypt.compareSync(password, user.password)) {
@@ -116,7 +109,6 @@ const AuthController = {
                         _id: user._id,
                         firstname: user.firstname,
                         lastname: user.lastname,
-                        username: user.username,
                         email: user.email,
                         token: 'Bearer ' + generateToken(user)
                     })
@@ -125,7 +117,7 @@ const AuthController = {
            
             return res
             .status(401)
-            .json({message: 'Username and password do not match'})
+            .json({message: 'email and password do not match'})
             
         } catch (err) {
             console.log(err.message)

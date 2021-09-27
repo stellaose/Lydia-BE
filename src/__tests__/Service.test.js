@@ -1,12 +1,11 @@
 import supertest from 'supertest';
-import dotenv from 'dotenv'
+import dotenv from 'dotenv';
 import mongoose from 'mongoose';
 import app from '../server';
 const request = supertest(app);
 
 dotenv.config();
 
- 
 describe('SERVICES test', () => {
   let mongo;
   beforeAll(async () => {
