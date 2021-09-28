@@ -20,7 +20,7 @@ const ServiceController = {
         }
       },
 
-      updateService : async (req, res) => {
+      updateService : async (req, res, next) => {
         try {
           const { serviceId } = req.params;
           const Service = req.body;

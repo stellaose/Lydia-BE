@@ -3,8 +3,9 @@ import AuthController from '../Controller/AuthController.js';
 
 const router = Router();
 
-router.post('/api/register', AuthController.signup);
-router.post('api/login', AuthController.login);
-router.post('/api/delete', AuthController.delete);
+router.post('/register', AuthController.signup);
+router.post('/login', AuthController.login);
+router.post('/delete', AuthController.delete);
+router.post('/google-login', AuthController.googleLogin);
 
 export default router;

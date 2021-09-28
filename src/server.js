@@ -16,7 +16,7 @@ app.get('/',  (req, res) => {
     });
   });
 
-app.use('/', UserRoute);
+app.use('/api', UserRoute);
 app.use('/service', ServiceRoute);
 
 export default app;
