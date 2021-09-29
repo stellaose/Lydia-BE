@@ -3,10 +3,12 @@ import dotenv from 'dotenv';
 
 dotenv.config();
 
+const db = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASSWORD}@lydia.tcjkl.mongodb.net/myFirstDatabase?retryWrites=true&w=majority`
+
 const databaseConnection = {
     getConnect: () => {
         mongoose
-          .connect(process.env.MONGODB_URI, {
+          .connect(db, {
             useNewUrlParser: true,
             useUnifiedTopology: true,
             useCreateIndex: true
