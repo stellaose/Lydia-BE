@@ -1,6 +1,6 @@
 const validatePassword = (password) => {
     const passLength = password.length >=8
-    const passChar = /^(?=.*[0-9])(?=.*[a-zA-Z])([a-zA-Z0-9]+)$/.test(password)
+    const passChar = /^(?=.*[A-Za-z])(?=.,_*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{6,}$/.test(password)
     return passLength && passChar 
 }
 
