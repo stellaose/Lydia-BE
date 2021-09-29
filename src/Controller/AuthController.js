@@ -11,10 +11,10 @@ dotenv.config()
 
 const AuthController = {
     signup: async (req, res) => {
-        const { name, email, password} = req.body;
+        const { firstname, lastname, email, password} = req.body;
 
         try{
-            if(!name || !email || !password){
+            if(!firstname || !lastname || !email || !password){
                 return res
                 .status(400)
                 .json({ message: 'Please fill all fields' });
@@ -34,10 +34,10 @@ const AuthController = {
                 .status(400)
                 .json({ message: 'Password must contain alphanumeric characters'});
             }
-            if(name === password){
+            if(firstname  === password || lastname === password){
                 return res 
                 .status(400)
-                .json({ message: 'Name and password cannot be a match. Please try a different password'});
+                .json({ message: 'Name(s) and password cannot be a match. Please try a different password'});
             }
 
                 const findUser = await User.findOne({email});
@@ -51,7 +51,7 @@ const AuthController = {
                 const hashedPassword = bcrypt.hashSync(password, salt);
 
                 if(hashedPassword){
-                    const newUser = new User({ name,  email, password: hashedPassword });
+                    const newUser = new User({ firstname, lastname,  email, password: hashedPassword });
                     const savedUser = await newUser.save();
 
                     if (savedUser) {
@@ -71,7 +71,8 @@ const AuthController = {
                                          data: {
                                              token: `Bearer ${token}`,
                                              id: savedUser._id,
-                                             name: savedUser.name,
+                                             firstname: savedUser,firstname, 
+                                             lastname: savedUser.lastname,
                                              email: savedUser.email,
                                              password: savedUser.password,
                                          }, 
@@ -107,7 +108,8 @@ const AuthController = {
                 if(bcrypt.compareSync(password, user.password)) {
                     return res.status(200).json({
                         _id: user._id,
-                        name: user.name,
+                        firstname: user.firstname,
+                        lastname: user.lastname,
                         email: user.email,
                         token: 'Bearer ' + generateToken(user)
                     })
@@ -131,7 +133,7 @@ const AuthController = {
         client
         .verifyIdToken({idToken: tokenId, audience: '755984224582-1c5ofvd65dg1j43b0aq2amnh09e00vit.apps.googleusercontent.com'})
         .then(response => {
-            const {email_verified, name, email} = response.payload
+            const {email_verified, firstname, lastname, email} = response.payload
 
             if(email_verified){
                 User.findOne({email}).exec((err, user) => {
@@ -144,14 +146,15 @@ const AuthController = {
                             if(bcrypt.compareSync(password, user.password)) {
                                 return res.status(200).json({
                                     _id: user._id,
-                                    name: user.name,
+                                    firstname: user.firstname,
+                                    lastname: user.lastname,
                                     email: user.email,
                                     token: 'Bearer ' + generateToken(user)
                                 })
                             }
                         } else{
                            const password = email+process.env.SECRET;
-                            const newUser = new User({ name,  email, password });
+                            const newUser = new User({ firstname, lastname,  email, password });
                             const savedUser = newUser.save();
 
                             if (savedUser) {
@@ -169,11 +172,12 @@ const AuthController = {
                                             { 
                                                  status: 'success',
                                                  data: {
-                                                     token: `Bearer ${token}`,
-                                                     id: savedUser._id,
-                                                     name: savedUser.name,
-                                                     email: savedUser.email,
-                                                     password: savedUser.password,
+                                                    token: `Bearer ${token}`,
+                                                    id: savedUser._id,
+                                                    firstname: savedUser,firstname, 
+                                                    lastname: savedUser.lastname,
+                                                    email: savedUser.email,
+                                                    password: savedUser.password,
                                                  }, 
                                                  message: 'successful'
                                              })

@@ -14,7 +14,7 @@ const databaseConnection = {
             useCreateIndex: true
           })
           .then(() => console.log('connected successfully'))
-          .catch((err) => console.log(err.message));
+          .catch((err) => console.log(err.message)); 
     }
 }
 
