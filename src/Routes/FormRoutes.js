@@ -3,6 +3,6 @@ import FormController from '../Controller/FormController.js';
 
 const router = Router();
 
-router.post('/signup', FormController.signup);
+router.post('/create', FormController.createForm);
 
 export default router;

@@ -4,13 +4,14 @@ import Auth from '../Middleware/Auth.js';
 
 const router = Router();
 
-router.get('/list', ServiceController.getServices);
+router.route('/list').get( ServiceController.getServices)
+                     .post(ServiceController.postService)
 router.get('/query', ServiceController.getServicesByQuery);
-router.post('/list', ServiceController.postService);
 
-//for the ids
-router.get('/:serviceId', ServiceController.getService)
-router.patch('/:serviceId', Auth, ServiceController.updateService);
-router.delete('/:serviceId', Auth, ServiceController.deleteServices);
+
+router.route('/:serviceId').get(ServiceController.getService)
+                            .patch(Auth, ServiceController.updateService)
+                            .delete(Auth, ServiceController.deleteServices)
+
 
 export default router;

@@ -5,7 +5,7 @@ const Schema = mongoose.Schema;
 const formSchema = new Schema(
   {
     preference: {
-      type: [],
+      type: String,
       required: true,
     },
     knowledge: {
@@ -13,7 +13,7 @@ const formSchema = new Schema(
       required: true,
       },
       room: {
-        type: [],
+        type: String,
       required: true,
       },
       name: {
