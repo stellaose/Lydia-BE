@@ -4,7 +4,7 @@ const FormController = {
     createForm: async (req, res) => {
         const { name, preference, knowledge, room,  price } = req.body;
         try{
-            const newForm = new Forms({ name, preference, knowledge, room,  price });
+            const newForm = new Forms({ name, preference, knowledge, room, date, price });
             const savedForm = await newForm.save();
 
             if(savedForm){

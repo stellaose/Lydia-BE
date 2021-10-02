@@ -21,6 +21,10 @@ const formSchema = new Schema(
         type: String,
       required: true,
     },
+    Date: {
+      type: Date, 
+      default: Date.now,
+    },
     price: {
       type: Number,
       required: true,
