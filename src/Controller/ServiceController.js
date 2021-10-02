@@ -87,9 +87,7 @@ const ServiceController = {
           const getOneService = await Services
                                         .findById({_id: serviceId})
                                         .exec();
-          const getReviews = await Reviews
-                                    .find({ serviceId })
-                                    .exec();
+        
           if (getOneService !== null) {
               
             return res
