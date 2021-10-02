@@ -15,6 +15,21 @@ const FormController = {
         } catch(err) {
             console.log(err);
         }
+    }, 
+    getForm: async (req, res) => {
+        try {
+            let form = await Forms.find().exec();
+            res
+            .status(200)
+            .json({ form })
+            .end();
+          } catch (err) {
+            console.log(err);
+            res
+            .status(400)
+            .send({ message: `Invalid request` })
+            .end();
+          }
     }
 }
 

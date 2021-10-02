@@ -4,6 +4,11 @@ const Schema = mongoose.Schema;
 
 const formSchema = new Schema(
   {
+    name: {
+      type: String,
+      required: true,
+      unique: true,
+    },
     preference: {
       type: String,
       required: true,
@@ -11,16 +16,11 @@ const formSchema = new Schema(
     knowledge: {
         type: String,
       required: true,
-      },
-      room: {
+    },
+    room: {
         type: String,
       required: true,
-      },
-      name: {
-        type: String,
-        required: true,
-        unique: true,
-      },
+    },
     price: {
       type: Number,
       required: true,
