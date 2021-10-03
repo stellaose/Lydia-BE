@@ -18,9 +18,13 @@ const serviceSchema = new Schema(
       required: true,
       min: 0,
     },
+    description: {
+      type: String,
+      required: true,
+    },
     content: {
-      type: Boolean,
-      default: false,
+      type: String,
+      required: true,
     }, 
     dateAdded: {
       type: Date,
