@@ -22,10 +22,26 @@ const serviceSchema = new Schema(
       type: String,
       required: true,
     },
-    content: {
+    content1: {
+      type: String,
+      required: true,
+    },
+    content2: {
       type: String,
       required: true,
     }, 
+    content3: {
+      type: String,
+      required: true,
+    },
+    content4: {
+      type: String,
+      required: true,
+    },
+    content5: {
+      type: String,
+      required: false,
+    },
     dateAdded: {
       type: Date,
       default: Date.now
