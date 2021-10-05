@@ -18,7 +18,7 @@ app.get('/',  (req, res) => {
     });
   });
 
-app.use('/api', UserRoute);
+app.use('/user', UserRoute);
 app.use('/service', ServiceRoute);
 app.use('/form', FormRoute)
 
