@@ -6,6 +6,6 @@ const router = Router();
 router.post('/register', AuthController.signup);
 router.post('/login', AuthController.login);
 router.post('/delete', AuthController.delete);
-router.post('/google-login', AuthController.googleLogin);
+router.post('/google', AuthController.googleLogin);
 
 export default router;
