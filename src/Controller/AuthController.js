@@ -51,7 +51,7 @@ const AuthController = {
                 const hashedPassword = bcrypt.hashSync(password, salt);
 
                 if(hashedPassword){
-                    const newUser = new User({ firstname, lastname,  email, password: hashedPassword });
+                    const newUser = new User({ firstname, lastname, email, password: hashedPassword });
                     const savedUser = await newUser.save();
 
                     if (savedUser) {
