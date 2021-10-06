@@ -29,18 +29,7 @@ const AuthController = {
                 .status(400)
                 .json({ message: 'Password must not be less than 8 characters'});
             }
-            if(!validatePassword(password)){
-                return res
-                .status(400)
-                .json({ message: 'Password must contain alphanumeric characters'});
-            }
-            if(firstname  === password || lastname === password){
-                return res 
-                .status(400)
-                .json({ message: 'Name(s) and password cannot be a match. Please try a different password'});
-            }
-
-                const findUser = await User.findOne({email});
+            const findUser = await User.findOne({email});
 
             if(findUser){
                 return res
@@ -189,8 +178,6 @@ const AuthController = {
                 })
             }
         })
-
-        console.log();
     },
 
     delete: async (req, res) => {
