@@ -7,7 +7,7 @@ const formSchema = new Schema(
     name: {
       type: String,
       required: true,
-      unique: true,
+      unique: false,
     },
     preference: {
       type: String,

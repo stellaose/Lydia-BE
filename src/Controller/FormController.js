@@ -4,6 +4,11 @@ const FormController = {
     createForm: async (req, res) => {
         const { name, preference, knowledge, room, date, price } = req.body;
         try{
+            if(!name || !preference || !knowledge || !room || !date || !price){
+                return res
+                .status(400)
+                .json({message: 'Please fill all fields'})
+            }
             const newForm = new Forms({ name, preference, knowledge, room, date, price });
             const savedForm = await newForm.save();
 
