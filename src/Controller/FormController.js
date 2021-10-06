@@ -2,7 +2,7 @@ import Forms from '../Model/FormModel.js';
 
 const FormController = {
     createForm: async (req, res) => {
-        const { name, preference, knowledge, room,  price } = req.body;
+        const { name, preference, knowledge, room, date, price } = req.body;
         try{
             const newForm = new Forms({ name, preference, knowledge, room, date, price });
             const savedForm = await newForm.save();
