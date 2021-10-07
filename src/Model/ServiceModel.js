@@ -11,7 +11,6 @@ const serviceSchema = new Schema(
     name: {
       type: String,
       required: true,
-      unique: true,
     },
     price: {
       type: Number,
@@ -42,10 +41,6 @@ const serviceSchema = new Schema(
       type: String,
       required: false,
     },
-    dateAdded: {
-      type: Date,
-      default: Date.now
-    }
   },
   {
     timestamps: true,
