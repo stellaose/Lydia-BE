@@ -82,10 +82,10 @@ const ServiceController = {
 
     getService : async (req, res) => {
         try {
-          const { serviceId} = req.params;
+          const { serviceId } = req.params;
       
           const getOneService = await Services
-                                        .findById({_id: serviceId})
+                                        .findById({ _id: serviceId })
                                         .exec();
         
           if (getOneService !== null) {
@@ -94,8 +94,7 @@ const ServiceController = {
                 .status(200)
                 .send({
                          data: {
-                            getOneService,
-                            reviews: getReviews
+                            getOneService
                         },
                         status: 'success'
                     })
