@@ -84,19 +84,18 @@ const ServiceController = {
         try {
           const { serviceId } = req.params;
       
-          const getOneService = await Services
+          const service = await Services
                                         .findById({ _id: serviceId })
+                                        .populate()
+                                        .lean()
                                         .exec();
         
-          if (getOneService !== null) {
+          if (service !== null) {
               
             return res
                 .status(200)
-                .send({
-                         data: {
-                            getOneService
-                        },
-                        status: 'success'
+                .json({
+                        service
                     })
                 .end();
           } 

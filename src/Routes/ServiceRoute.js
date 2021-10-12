@@ -13,5 +13,4 @@ router.route('/:serviceId').get(ServiceController.getService)
                             .patch(Auth, ServiceController.updateService)
                             .delete(Auth, ServiceController.deleteServices);
 
-
 export default router;

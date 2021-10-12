@@ -1,5 +1,7 @@
 import jwt from 'jsonwebtoken';
+import dotenv from 'dotenv';
 
+dotenv.config()
 
 export const generateToken = (user) => {
     return jwt.sign({
@@ -11,7 +13,7 @@ export const generateToken = (user) => {
     },
     process.env.SECRET,
     {
-        expiresIn: 3600
+        expiresIn: 86000
     }
     )
 }

@@ -2,7 +2,6 @@ import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import dotenv from 'dotenv';
 import emailValidation from '../Utils/validateEmail.js';
-import validatePassword from '../Utils/validatePassword.js';
 import {OAuth2Client} from 'google-auth-library'
 import {generateToken} from '../Utils/generateToken.js'; 
 import { User } from '../Model/UserModel.js';
