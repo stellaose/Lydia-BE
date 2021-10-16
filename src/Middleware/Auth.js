@@ -3,7 +3,7 @@ import dotenv from 'dotenv';
 
 dotenv.config();
 
-const auth = (req, res, next) => {
+const Auth = (req, res, next) => {
   if (req) {
     const authorization = req.header('Authorization');
     if (!authorization) {
@@ -36,4 +36,4 @@ const auth = (req, res, next) => {
   }
 };
 
-export default auth;
+export default Auth;
