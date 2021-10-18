@@ -1,4 +1,5 @@
 import Services from '../Model/ServiceModel.js';
+import Reviews from '../Model/ReviewModel.js';
 
 const ServiceController = {
     getServices : async (req, res) => {
@@ -65,7 +66,8 @@ const ServiceController = {
               if (createService) {
                 return res
                     .status(200)
-                    .send({createService, status: 'success' })
+                    .send({createService, 
+                            status: 'success' })
                     .end();
               } 
               else {
@@ -89,13 +91,17 @@ const ServiceController = {
                                         .populate()
                                         .lean()
                                         .exec();
+        const getReviews = await Reviews
+                                    .find({ serviceId })
+                                    .exec();
         
           if (service !== null) {
               
             return res
                 .status(200)
                 .json({
-                        service
+                        service,
+                        reviews: getReviews,
                     })
                 .end();
           } 
@@ -109,7 +115,7 @@ const ServiceController = {
         } catch (err) {
           return res
             .status(400)
-            .send({ message: "invalid serviceId request" })
+            .json({ message: "invalid serviceId request" })
             .end();
         }
     },
@@ -122,8 +128,9 @@ const ServiceController = {
                                             .exec();
           
             res.statusCode = 200;
-             res.send({
+             res.json({
                     data: getMultipleServices,
+                    reviews: getReviews,
                     status: 'success',
                 });         
         } 

@@ -55,7 +55,10 @@ const ReviewController = {
               data: addReview,
             });
           } else {
-            res.status(400).send({ message: `Could not create review` }).end();
+            return res
+                .status(400)
+                .json({ message: `Could not create review` })
+                cd .end();
           }
         } catch (err) {
           console.log(err);
