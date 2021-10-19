@@ -115,7 +115,7 @@ const ServiceController = {
         } catch (err) {
           return res
             .status(400)
-            .json({ message: "invalid serviceId request" })
+            .json({ message: "Invalid serviceId request" })
             .end();
         }
     },
@@ -127,10 +127,10 @@ const ServiceController = {
                                             .lean()
                                             .exec();
           
-            res.statusCode = 200;
-             res.json({
+            res.status(200)
+                .json({
                     data: getMultipleServices,
-                    reviews: getReviews,
+                    getReviews,
                     status: 'success',
                 });         
         } 
