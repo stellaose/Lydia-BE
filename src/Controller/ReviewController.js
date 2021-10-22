@@ -58,7 +58,7 @@ const ReviewController = {
             return res
                 .status(400)
                 .json({ message: `Could not create review` })
-                cd .end();
+                .end();
           }
         } catch (err) {
           console.log(err);
