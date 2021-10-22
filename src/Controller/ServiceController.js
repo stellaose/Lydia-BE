@@ -98,12 +98,12 @@ const ServiceController = {
           if (service !== null) {
               
             return res
-                .status(200)
-                .json({
-                        service,
-                        reviews: getReviews,
-                    })
-                .end();
+                    .status(200)
+                    .json({
+                            service,
+                            reviews: getReviews,
+                        })
+                    .end();
           } 
           else {
            return res

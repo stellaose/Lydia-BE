@@ -131,7 +131,6 @@ const AuthController = {
                         .json({message: 'Something went wrong...'})
                     } else{
                         if(user){
-                            if(bcrypt.compareSync(password, user.password)) {
                                 return res.status(200).json({
                                     _id: user._id,
                                     firstname: user.firstname,
@@ -139,10 +138,9 @@ const AuthController = {
                                     email: user.email,
                                     token: 'Bearer ' + generateToken(user)
                                 })
-                            }
                         } else{
                            const password = email+process.env.SECRET;
-                            const newUser = new User({ firstname, lastname,  email, password });
+                            const newUser = new User({ firstname, lastname,  email });
                             const savedUser = newUser.save();
 
                             if (savedUser) {
@@ -165,7 +163,6 @@ const AuthController = {
                                                     firstname: savedUser,firstname, 
                                                     lastname: savedUser.lastname,
                                                     email: savedUser.email,
-                                                    password: savedUser.password,
                                                  }, 
                                                  message: 'successful'
                                              })
