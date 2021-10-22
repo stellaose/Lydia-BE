@@ -4,6 +4,7 @@ import cors from 'cors';
 import UserRoute from './Routes/UserRoute.js';
 import ServiceRoute from './Routes/ServiceRoute.js';
 import FormRoute from './Routes/FormRoutes.js';
+import ReviewRoute from './Routes/ReviewRoute.js';
 
 const app = express(); 
 
@@ -23,5 +24,6 @@ app.get('/',  (req, res) => {
 app.use('/user', UserRoute);
 app.use('/service', ServiceRoute);
 app.use('/form', FormRoute);
+app.use('/review', ReviewRoute);
 
 export default app;

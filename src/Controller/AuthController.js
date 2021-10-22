@@ -139,7 +139,6 @@ const AuthController = {
                                     token: 'Bearer ' + generateToken(user)
                                 })
                         } else{
-                           const password = email+process.env.SECRET;
                             const newUser = new User({ firstname, lastname,  email });
                             const savedUser = newUser.save();
 
