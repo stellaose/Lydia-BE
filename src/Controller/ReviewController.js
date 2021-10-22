@@ -41,17 +41,38 @@ const ReviewController = {
     }
   },
  
+  getReviews: async (req, res) => {
+    try {
+      const reviews = await Reviews.find()
+                                    .exec()
+      
+      return res
+              .status(200)
+              .json({ reviews })
+              .end()
+    }
+    catch (err){
+      console.log(err)
+      return res
+              .status(400)
+              .json({ message: 'invalid request'})
+              .end()
+    }
+  }, 
+
   getReview : async (req, res) => {
     try{
-      const { serviceId } = req.params;
+      const { reviewId } = req.params;
       const getOneReview = await Reviews
-                                .findById({ _id: serviceId })
+                                .findById({ _id: reviewId })
+                                .populate()
+                                .lean()
                                 .exec();
   
       if (getOneReview !== null) {
         return res
                 .status(200)
-                .json({ getReviews,
+                .json({ getOneReview,
                       message: 'Successful' })
                 .end();
       } else {
