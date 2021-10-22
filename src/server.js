@@ -2,8 +2,8 @@ import express from 'express';
 import cors from 'cors';
 
 import UserRoute from './Routes/UserRoute.js';
-import ServiceRoute from './Routes/ServiceRoute.js';
 import FormRoute from './Routes/FormRoutes.js';
+import ServiceRoute from './Routes/index.js';
 
 const app = express(); 
 
@@ -21,7 +21,7 @@ app.get('/',  (req, res) => {
 
 
 app.use('/user', UserRoute);
-app.use('/service', ServiceRoute);
 app.use('/form', FormRoute);
+app.use('/', ServiceRoute);
 
 export default app;
