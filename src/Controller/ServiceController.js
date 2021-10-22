@@ -91,8 +91,9 @@ const ServiceController = {
                                         .populate()
                                         .lean()
                                         .exec();
-        const getReviews = await Reviews
+          const getReviews = await Reviews
                                     .find({ serviceId })
+                                    .populate()
                                     .exec();
         
           if (service !== null) {
