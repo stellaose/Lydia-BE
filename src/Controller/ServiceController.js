@@ -101,8 +101,10 @@ const ServiceController = {
             return res
                     .status(200)
                     .json({
-                            service,
-                            reviews: getReviews,
+                      data: {
+                        service,
+                        reviews: getReviews
+                      },
                         })
                     .end();
           } 
