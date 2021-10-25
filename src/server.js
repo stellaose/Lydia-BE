@@ -3,7 +3,8 @@ import cors from 'cors';
 
 import UserRoute from './Routes/UserRoute.js';
 import FormRoute from './Routes/FormRoutes.js';
-import ServiceRoute from './Routes/index.js';
+import ServiceRoute from './Routes/ServiceRoute.js';
+import ReviewRoute from './Routes/ReviewRoute.js';
 
 const app = express(); 
 
@@ -22,6 +23,8 @@ app.get('/',  (req, res) => {
 
 app.use('/user', UserRoute);
 app.use('/form', FormRoute);
-app.use('/', ServiceRoute);
+app.use('/service', ServiceRoute);
+app.use('/service', ReviewRoute);
+
 
 export default app;
