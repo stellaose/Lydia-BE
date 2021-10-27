@@ -5,6 +5,7 @@ import UserRoute from './Routes/UserRoute.js';
 import FormRoute from './Routes/FormRoutes.js';
 import ServiceRoute from './Routes/ServiceRoute.js';
 import ReviewRoute from './Routes/ReviewRoute.js';
+import CheckoutRoute from './Routes/CheckoutRoute.js';
 
 const app = express(); 
 
@@ -25,6 +26,7 @@ app.use('/user', UserRoute);
 app.use('/form', FormRoute);
 app.use('/service', ServiceRoute);
 app.use('/service', ReviewRoute);
+app.use('/checkout', CheckoutRoute);
 
 
 export default app;
