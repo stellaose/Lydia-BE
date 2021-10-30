@@ -14,20 +14,13 @@ const ReviewController = {
               .json({ message: `No serviceId present for this review` })
               .end();
       }
-     if(!author || !title ||! comment){
+     if(!author || !title ||!comment){
         return res
                 .status(400)
                 .json({message: 'Please fill all fields'})
                 .end();
       }
-    
-      // if(!review){
-      //   return res
-      //           .status(400)
-      //           .json({message: 'Please fill all fields'})
-      //           .end();
-      // }
-      
+          
       const addReview = await Reviews.create({ ...review, serviceId });
 
       if (addReview) {
