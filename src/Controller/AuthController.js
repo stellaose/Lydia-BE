@@ -2,6 +2,7 @@ import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import dotenv from 'dotenv';
 import emailValidation from '../Utils/validateEmail.js';
+import Checkout from '../Model/CheckoutModel.js'
 import {OAuth2Client} from 'google-auth-library'
 import {generateToken} from '../Utils/generateToken.js'; 
 import { User } from '../Model/UserModel.js';
@@ -41,6 +42,7 @@ const AuthController = {
                 if(hashedPassword){
                     const newUser = new User({ firstname, lastname, email, password: hashedPassword });
                     const savedUser = await newUser.save();
+                    await Checkout.create({user: savedUser._id, cart: []});
 
                     if (savedUser) {
                     
