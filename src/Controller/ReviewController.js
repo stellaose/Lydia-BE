@@ -5,6 +5,7 @@ const ReviewController = {
   postReview: async (req, res) => {
     try {
       const review = req.body;
+      const { author, title, comment } = review
       const { serviceId } = req.params;
 
       if (!serviceId) {
@@ -13,13 +14,19 @@ const ReviewController = {
               .json({ message: `No serviceId present for this review` })
               .end();
       }
-     
-      if(!review){
+     if(!author || !title ||! comment){
         return res
                 .status(400)
                 .json({message: 'Please fill all fields'})
                 .end();
       }
+    
+      // if(!review){
+      //   return res
+      //           .status(400)
+      //           .json({message: 'Please fill all fields'})
+      //           .end();
+      // }
       
       const addReview = await Reviews.create({ ...review, serviceId });
 
