@@ -10,8 +10,8 @@ const CheckoutController = {
         
         
             const isAdded = findCheckout.checkout
-                                    .filter(service => service.service.toString() === serviceId)
-                                    .length > 0;
+                                        .filter(service => service.service.toString() === serviceId)
+                                        .length > 0;
             
             if (isAdded) {
               return res

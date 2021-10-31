@@ -86,7 +86,7 @@ const ServiceController = {
         try {
           const { serviceId } = req.params;
       
-          const service = await Services
+          const getService = await Services
                                         .findById({ _id: serviceId })
                                         .populate()
                                         .lean()
@@ -96,13 +96,13 @@ const ServiceController = {
                                     .populate()
                                     .exec();
         
-          if (service !== null) {
+          if (getService !== null) {
               
             return res
                     .status(200)
                     .json({
                       data: {
-                        service,
+                        getService,
                         reviews: getReviews
                       },
                         })
