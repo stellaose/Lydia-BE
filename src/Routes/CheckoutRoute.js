@@ -8,9 +8,8 @@ let router = Router();
 router.get('/list', CheckoutController.getServices)
 
 router.get("/:userId", CheckoutController.getService);
-router.post("/:serviceId", Auth, CheckoutController.postService);
+router.post("/:serviceId",  CheckoutController.postService);
 
-//Cart IDs
 router.delete("/:serviceId", Auth, CheckoutController.deleteService);
 
 export default router;
