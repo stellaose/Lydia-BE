@@ -7,12 +7,17 @@ const checkoutSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: 'user',
   },
-  checkout: [
+  item: [
     {
-        service: {
+      serviceId: {
         type: Schema.Types.ObjectId,
         ref: 'Service',
-       
+      },
+      name: {
+        type: String,
+      },
+      price: {
+        type: String,
       },
     },
   ],

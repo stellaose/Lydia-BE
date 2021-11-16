@@ -1,71 +1,37 @@
 import jwt from 'jsonwebtoken';
-// import dotenv from 'dotenv';
+import { User } from '../Model/UserModel.js';
 
-// dotenv.config();
+import dotenv from 'dotenv'
+dotenv.config();
 
-// const Auth = (req, res, next) => {
-//   if (req) {
-//     const authorization = req.header('Authorization');
-//     if (!authorization) {
-//       return res
-//         .status(401)
-//         .json({ 
-//               status: 'failed', 
-//               msg: 'No authorization is set' 
-//           })
-//         .end();
-//     }
-//     const token = authorization.replace('Bearer ', '');
-//     try {
-//         const data = jwt.verify(token, process.env.SECRET);
-        
-//       if (data && data._id) {
-//         req.user = data;
-        
-//         next();
-//       } else {
-//         return res
-//           .status(401)
-//           .json({ status: 'failed', msg: 'Token is incorrect' })
-//           .end();
-//       }
-//     } catch (e) {
-//         console.log(e.message, "find the token error")
-//       return res
-//         .status(401)
-//         .json({ status: 'failed', msg: 'Token has expired' })
-//         .end();
-//     }
-//   }
-// };
+const Auth = async (req, res, next) => {
+    const bearerToken = req.header('Authorization');
+    if (!bearerToken) {
+      return res
+                .status(401)
+                .json({ 
+                    status: 'fail', 
+                    message: 'unauthorized' 
+                });
+    }
+    try {
+      const token = bearerToken.split(' ')[1];
+      const decoded = jwt.verify(token, process.env.SECRET);
+      const user = await User.findById(decoded.id)
 
-// export default Auth;
+      req.body.user = user._id;
+      next();
+
+    } catch (error) {
+      return res
+        .status(500)
+        .json({ 
+            status: 'fail', 
+            message: 'server error' 
+        });
+    }
+};
+
+export default Auth;
 
 
-const Auth = (req, res, next) => {
-  // check for authorization token
-  const token = req.headers.authorization;
-
-  if(!token)
-      return res.status(401).json({
-          status: 'false',
-          message: 'failed to authenticate token'
-      });
-  let bearerToken = token.split(' ')[1];
-  console.log(bearerToken, 'thi');
-
- jwt.verify(bearerToken, process.env.SECRET,(err, decode) => {
-      if(err)
-          return res.status(401).json({
-              status: 'fail',
-              message: 'Failed to authenticate token'
-          });
-          next();
-  })
-          return res.status(401).json({
-              status: 'fail',
-              message: 'unauthorized'
-          })
-}
-
-export default Auth

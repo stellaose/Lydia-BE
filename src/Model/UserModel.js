@@ -2,7 +2,7 @@ import mongoose from 'mongoose';
 import validator from 'validator';
 
 const { Schema, model} = mongoose;
-const { isEmail } = validator;
+const {isEmail} = validator
 
 const userSchema = new Schema (
     {

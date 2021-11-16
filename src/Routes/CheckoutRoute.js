@@ -5,11 +5,11 @@ import Auth from '../Middleware/Auth.js';
 
 let router = Router();
 
-router.get('/list', CheckoutController.getServices)
+// router.get('/list', CheckoutController.getServices)
 
-router.get("/:userId", CheckoutController.getService);
-router.post("/:serviceId",  CheckoutController.postService);
+// router.get("/:userId", CheckoutController.getService);
+// router.post("/:serviceId",  CheckoutController.postService);
 
-router.delete("/:serviceId", Auth, CheckoutController.deleteService);
+// router.delete("/:serviceId", Auth, CheckoutController.deleteService);
 
 export default router;
