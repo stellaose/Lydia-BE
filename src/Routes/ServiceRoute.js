@@ -4,7 +4,7 @@ import Auth from '../Middleware/Auth.js';
 
 const router = Router();
 
-router.route('/list').get(Auth, ServiceController.getServices)
+router.route('/list').get( ServiceController.getServices)
                      .post(ServiceController.postService);
 router.get('/query', ServiceController.getServicesByQuery);
 
