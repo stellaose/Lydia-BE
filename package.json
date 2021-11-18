@@ -23,6 +23,7 @@
     "mongodb-memory-server-core": "^7.4.0",
     "mongoosh": "0.0.5",
     "react-google-login": "^5.2.2",
+    "stripe": "^8.190.0",
     "validator": "^13.6.0"
   },
   "devDependencies": {
