@@ -116,12 +116,12 @@ const AuthController = {
     },
     
     googleLogin: async (req, res) => {
-        const { userToken } = req.body;
+        const { tokenId } = req.body;
 
         const client = new OAuth2Client('755984224582-1c5ofvd65dg1j43b0aq2amnh09e00vit.apps.googleusercontent.com');
 
         client
-        .verifyIdToken({idToken: userToken, audience: '755984224582-1c5ofvd65dg1j43b0aq2amnh09e00vit.apps.googleusercontent.com'})
+        .verifyIdToken({idToken: tokenId, audience: '755984224582-1c5ofvd65dg1j43b0aq2amnh09e00vit.apps.googleusercontent.com'})
         .then(response => {
             const {email_verified, firstname, lastname, email} = response.payload
 
