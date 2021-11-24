@@ -1,37 +1,36 @@
 import jwt from 'jsonwebtoken';
-import { User } from '../Model/UserModel.js';
 
-import dotenv from 'dotenv'
-dotenv.config();
-
-const Auth = async (req, res, next) => {
-    const bearerToken = req.header('Authorization');
-    if (!bearerToken) {
+const Auth = (req, res, next) => {
+  if (req) {
+    const authorization = req.header('Authorization');
+    if (!authorization) {
       return res
-                .status(401)
-                .json({ 
-                    status: 'fail', 
-                    message: 'unauthorized' 
-                });
+        .status(401)
+        .json({ status: 'failed', msg: 'No authorization is set' })
+        .end();
     }
+    const token = authorization.replace('Bearer ', '');
     try {
-      const token = bearerToken.split(' ')[1];
-      const decoded = jwt.verify(token, process.env.SECRET);
-      const user = await User.findById(decoded.id)
-
-      req.body.user = user._id;
-      next();
-
-    } catch (error) {
+        const data = jwt.verify(token, process.env.SECRET);
+        
+      if (data && data._id) {
+        req.user = data;
+        
+        next();
+      } else {
+        return res
+          .status(401)
+          .json({ status: 'failed', msg: 'Token is incorrect' })
+          .end();
+      }
+    } catch (e) {
+        console.log(e.message, "find the token error")
       return res
-        .status(500)
-        .json({ 
-            status: 'fail', 
-            message: 'server error' 
-        });
+        .status(401)
+        .json({ status: 'failed', msg: 'Token has expired' })
+        .end();
     }
+  }
 };
 
 export default Auth;
-
-

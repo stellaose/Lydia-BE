@@ -18,7 +18,6 @@ const userSchema = new Schema (
             type: String,
             lowercase: true,
             required: true,
-            lowercase: true,
             validate: [ isEmail, 'Please enter a valid email']
         },
         password: {

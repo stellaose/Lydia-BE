@@ -42,7 +42,7 @@ const AuthController = {
                 if(hashedPassword){
                     const newUser = new User({ firstname, lastname, email, password: hashedPassword });
                     const savedUser = await newUser.save();
-                    await Checkout.create({user: savedUser._id, cart: []});
+                    await Checkout.create({user: savedUser._id, checkout: []});
 
                     if (savedUser) {
                     
