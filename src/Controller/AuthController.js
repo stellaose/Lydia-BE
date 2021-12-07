@@ -11,10 +11,10 @@ dotenv.config()
 
 const AuthController = {
     signup: async (req, res) => {
-        const { firstname, lastname, email, password} = req.body;
+        const { firstname, lastname, email, password, confirmPassword } = req.body;
 
         try{
-            if(!firstname || !lastname || !email || !password){
+            if(!firstname || !lastname || !email || !password || !confirmPassword){
                 return res
                 .status(400)
                 .json({ message: 'Please fill all fields' });
@@ -29,7 +29,14 @@ const AuthController = {
                 .status(400)
                 .json({ message: 'Password must not be less than 8 characters'});
             }
-            const findUser = await User.findOne({email});
+            if(password !== confirmPassword){
+                return res
+                    .status(400)
+                    .json({
+                        message: 'Passwords do not match. Please try again'
+                    })
+            }
+            const findUser = await User.findOne({email})
 
             if(findUser){
                 return res
@@ -37,10 +44,17 @@ const AuthController = {
                 .json({ message: 'This user already exist. Please log in'});
             }
                 const salt = bcrypt.genSaltSync(10);
-                const hashedPassword = bcrypt.hashSync(password, salt);
+                const hashedPassword = bcrypt.hashSync(password,  salt);
+                const hashPassword = bcrypt.hashSync(confirmPassword, salt)
 
                 if(hashedPassword){
-                    const newUser = new User({ firstname, lastname, email, password: hashedPassword });
+                    const newUser = new User({ 
+                                            firstname, 
+                                            lastname, 
+                                            email, 
+                                            password: hashedPassword, 
+                                            confirmPassword: hashPassword 
+                                        });
                     const savedUser = await newUser.save();
                     await Checkout.create({user: savedUser._id, checkout: []});
 
@@ -95,21 +109,27 @@ const AuthController = {
             const user = await User.findOne({ email })
           
             if(user) {
-                if(bcrypt.compareSync(password, user.password)) {
-                    return res.status(200).json({
-                        _id: user._id,
-                        firstname: user.firstname,
-                        lastname: user.lastname,
-                        email: user.email,
-                        token: 'Bearer ' + generateToken(user)
+               return res
+                    .status(400)
+                    .json({
+                        message: 'This user already exist. Please login.'
                     })
-                }
             }
-           
-            return res
-            .status(401)
-            .json({message: 'email and password do not match'})
-            
+            const match = await bcrypt.compare(password, user.password);
+
+            if (!match) {
+              return res
+                .status(400)
+                .json({ status: 'fail', message: 'email or password is incorrect' });
+            }{
+                return res.status(200).json({
+                    _id: user._id,
+                    firstname: user.firstname,
+                    lastname: user.lastname,
+                    email: user.email,
+                    token: 'Bearer ' + generateToken(user)
+                })
+            }
         } catch (err) {
             console.log(err.message)
         }
