@@ -1,6 +1,8 @@
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import dotenv from 'dotenv';
+import Mailgun from 'mailgun.js'
+import formData from 'form-data';
 import emailValidation from '../Utils/validateEmail.js';
 import Checkout from '../Model/CheckoutModel.js'
 import {OAuth2Client} from 'google-auth-library'
@@ -8,6 +10,10 @@ import {generateToken} from '../Utils/generateToken.js';
 import { User } from '../Model/UserModel.js';
 
 dotenv.config()
+
+const DOMAIN = "sandbox4de08e94d41049b1ba6aa781219dc957.mailgun.org";
+const mailgun = new Mailgun(formData);
+const mg = mailgun.client({domain: DOMAIN, username: 'api', key: process.env.MAILGUN_API_KEY || 'key-yourkeyhere'});
 
 const AuthController = {
     signup: async (req, res) => {
@@ -153,13 +159,15 @@ const AuthController = {
                         .json({message: 'Something went wrong...'})
                     } else{
                         if(user){
-                                return res.status(200).json({
-                                    _id: user._id,
-                                    firstname: user.firstname,
-                                    lastname: user.lastname,
-                                    email: user.email,
-                                    token: 'Bearer ' + generateToken(user)
-                                })
+                                return res
+                                        .status(200)
+                                        .json({
+                                            _id: user._id,
+                                            firstname: user.firstname,
+                                            lastname: user.lastname,
+                                            email: user.email,
+                                            token: 'Bearer ' + generateToken(user)
+                                        })
                         } else{
                             const newUser = new User({ firstname, lastname,  email });
                             const savedUser = newUser.save();
@@ -196,6 +204,53 @@ const AuthController = {
             }
         })
     },
+
+    forgetPassword: async (req, res) => {
+        const { email } = req.body;
+
+        User.findOne({email}, (err, user) => {
+
+            if(!user || err){
+                return res 
+                    .status(400)
+                    .json({
+                        status: 'failed',
+                        message: 'User with this email does not exist'
+                    })
+            }
+
+            const token = jwt.sign({_id: user._id}, process.env.FORGET_PASSWORD, {expiresIn: '20m'})
+            const data = {
+                from: 'noreply@hello.com',
+                to: email,
+                subject: 'Account Activation Link',
+                html: `
+                    <h2>Please click on the link to reset your password</h2>
+                    <p>${process.env.CLIENT_URL}/reset-password/${token}</p>
+                `
+            }
+            return user.updateOne({resetLink: token}, (err, success) =>{
+                if(err){
+                    return res
+                            .status(400)
+                            .json({
+                                status: 'failed',
+                                message: 'Reset password link error'
+                            })
+                } else {
+                    mg.messages.create(DOMAIN, data)
+                    .then((res) => {
+                      console.log(res);
+                    })
+                    .catch((err) => {
+                      console.error(err);
+                    });
+                }
+            })
+        })
+
+       
+    }, 
 
     delete: async (req, res) => {
         const { email, password } = req.body;

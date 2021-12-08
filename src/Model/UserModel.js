@@ -27,6 +27,10 @@ const userSchema = new Schema (
         confirmPassword: {
             type: String,
             required: true
+        },
+        resetLink: {
+            data: String,
+            default: ''
         }
     },
     {timestamps: true}

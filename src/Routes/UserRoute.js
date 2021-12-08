@@ -7,5 +7,6 @@ router.post('/register', AuthController.signup);
 router.post('/login', AuthController.login);
 router.delete('/delete', AuthController.delete);
 router.post('/google', AuthController.googleLogin);
+router.put('/forget-password', AuthController.forgetPassword);
 
 export default router;
