@@ -9,7 +9,7 @@ router.get('/list/review', ReviewController.getReviews)
 router.delete('/:serviceId/review', Auth, ReviewController.deleteReviews);
 
 //for each review id
-router.get('/:serviceId/review/:reviewId',  ReviewController.getReview);
+router.get('/review/:reviewId',  ReviewController.getReview);
 router.delete('/:serviceId/review/:reviewId', Auth, ReviewController.deleteReview);
 
 export default router;

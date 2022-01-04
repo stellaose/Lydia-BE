@@ -1,12 +1,16 @@
 import { Router } from 'express';
-import AuthController from '../Controller/AuthController.js';
+import UserController from '../Controller/UserController.js';
 
 const router = Router();
 
-router.post('/register', AuthController.signup);
-router.post('/login', AuthController.login);
-router.delete('/delete', AuthController.delete);
-router.post('/google', AuthController.googleLogin);
-router.put('/forget-password', AuthController.forgetPassword);
+router.post('/register', UserController.signup);
+router.post('/login', UserController.login);
+router.delete('/delete', UserController.delete);
+router.post('/google', UserController.googleLogin);
+router.put('/forget-password', UserController.forgetPassword);
+router.put('/reset-password', UserController.resetPassword);
+// router.patch('/reset-password', UserController.resetPassword);
+
+
 
 export default router;

@@ -16,13 +16,16 @@
   "dependencies": {
     "bcrypt": "^5.0.1",
     "cors": "^2.8.5",
+    "crypto": "^1.0.1",
     "dotenv": "^10.0.0",
     "express": "^4.17.1",
     "google-auth-library": "^7.9.2",
     "jsonwebtoken": "^8.5.1",
+    "lodash": "^4.17.21",
     "mailgun.js": "^4.1.0",
     "mongodb-memory-server-core": "^7.4.0",
     "mongoosh": "0.0.5",
+    "nodemailer": "^6.7.2",
     "react-google-login": "^5.2.2",
     "stripe": "^8.190.0",
     "validator": "^13.6.0"

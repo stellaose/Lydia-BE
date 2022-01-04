@@ -1,7 +1,7 @@
 const validatePassword = (password) => {
-    const passLength = password.length >= 8
-    const passChar = /^(?=.[A-Za-z])(?=.\d)(?=.[@$!%#?&])[A-Za-z\d@$!%*#?&]{8,}/.test(password)
-    return passLength && passChar 
-}
+        const passLength = password.length >=7
+        const passChar = /^(?=.*[0-9])(?=.*[a-zA-Z])([a-zA-Z0-9]+)$/.test(password)
+        return passLength && passChar   
+    }
 
 export default validatePassword;

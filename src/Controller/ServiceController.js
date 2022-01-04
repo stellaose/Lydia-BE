@@ -1,8 +1,9 @@
 import Services from '../Model/ServiceModel.js';
+import ErrorResponse from '../Utils/ErrorResponse.js';
 import Reviews from '../Model/ReviewModel.js';
 
 const ServiceController = {
-    getServices : async (req, res) => {
+    getServices : async (req, res, next) => {
         try {
           let services = await Services
                                 .find()
@@ -14,10 +15,8 @@ const ServiceController = {
         } 
         catch (err) {
           console.log(err)
-          return res
-                .status(400)
-                .send({ message: `Invalid request` })
-                .end();
+          return next
+              (new ErrorResponse("Invalid request", 400))
         }
       },
 
@@ -39,10 +38,8 @@ const ServiceController = {
                 .end();
           } 
           else {
-             return res
-               .status(404)
-               .send({ message: 'there is no service available for this id' })
-               .end();
+             return next
+                (new ErrorResponse("There is no service available for this id", 404))
           }
         } 
         catch (err) {
@@ -52,7 +49,7 @@ const ServiceController = {
             .end();
         }
     },
-        postService : async (req, res) => {
+        postService : async (req, res, next) => {
             try {
               let newService = req.body;
 
@@ -71,10 +68,8 @@ const ServiceController = {
                     .end();
               } 
               else {
-                 return res
-                    .status(400)
-                    .send({ message: `Could not create service` })
-                    .end();
+                 return next
+                    (new ErrorResponse("Could not create service", 400))
               }
               
             } catch (err) {
@@ -82,7 +77,7 @@ const ServiceController = {
             }
     },
 
-    getService : async (req, res) => {
+    getService : async (req, res, next) => {
         try {
           const { serviceId } = req.params;
       
@@ -109,17 +104,14 @@ const ServiceController = {
                     .end();
           } 
           else {
-           return res
-                    .status(404)
-                    .send({ message: "Incorrect serviceId" })
-                    .end()
+           return next
+                (new ErrorResponse("Incorrect serviceId", 404))
           }
          
         } catch (err) {
-          return res
-            .status(400)
-            .json({ message: "Invalid serviceId request" })
-            .end();
+          console.log(err)
+          return next 
+              (new ErrorResponse("Invalid serviceId",400))
         }
     },
 
@@ -160,16 +152,14 @@ const ServiceController = {
                     });
           } 
             else {
-            return res
-                .status(404)
-                .send({ message: 'Incorrect serviceId' })
-                .end();
+            return next
+                (new ErrorResponse("Invalid serviceId", 400))
             }
         } 
         catch (err) {
-          return res
-            .status(400)
-            .send({ message: "invalid serviceId request" });
+          console.log(err);
+          return next
+              (new ErrorResponse("Invalid serviceId request", 404))
         }
       }
 };

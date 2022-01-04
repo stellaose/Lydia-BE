@@ -1,24 +1,21 @@
 import Reviews from '../Model/ReviewModel.js';
+import ErrorResponse from '../Utils/ErrorResponse.js'
 
 const ReviewController = {
 
-  postReview: async (req, res) => {
+  postReview: async (req, res, next) => {
     try {
       const review = req.body;
       const { author, title, comment } = review
       const { serviceId } = req.params;
 
       if (!serviceId) {
-        return res
-              .status(400)
-              .json({ message: `No serviceId present for this review` })
-              .end();
+        return next
+            (new ErrorResponse("No serviceId present for this review", 400))
       }
      if(!author || !title ||!comment){
-        return res
-                .status(400)
-                .json({message: 'Please fill all fields'})
-                .end();
+        return next 
+            (new ErrorResponse("Please fill all fields", 400))
       }
           
       const addReview = await Reviews.create({ ...review, serviceId });
@@ -33,10 +30,8 @@ const ReviewController = {
               .end();
       } 
       else {
-        return res
-              .status(400)
-              .json({ message: `Could not create review` })
-              .end();
+        return next
+            (new ErrorResponse("Could not create review", 400))
       }
     } catch (err) {
       console.log(err);
@@ -55,10 +50,8 @@ const ReviewController = {
     }
     catch (err){
       console.log(err)
-      return res
-              .status(400)
-              .json({ message: 'invalid request'})
-              .end()
+      return next
+        (new ErrorResponse("Invalid request", 400))
     }
   }, 
 
@@ -74,20 +67,19 @@ const ReviewController = {
       if (getOneReview !== null) {
         return res
                 .status(200)
-                .json({ getOneReview,
-                      message: 'Successful' })
+                .json({ data:{
+                  getOneReview
+                },
+                   })
                 .end();
       } else {
-        return res
-          .status(404)
-          .send({ message: `there are no reviews with this service id` })
-          .end();
+        return next
+            (new ErrorResponse("there are no reviews with this service id", 400))
       }
     }
     catch (err){
-      return res
-          .status(400)
-          .json({message: 'Something went wrong'})
+      return next
+          (new ErrorResponse("Something went wrong", 400))
 
     }
   }, 
@@ -107,20 +99,16 @@ const ReviewController = {
           .end();
       } 
       else {
-        return res
-          .status(404)
-          .json({ message: `there are no reviews with this id` })
-          .end();
+        return next
+            (new ErrorResponse("there are no reviews with this id", 400))
       }
     } catch (err) {
-        return res
-          .status(400)
-          .json({ message: `Invalid review id` })
-          .end();
+        return next
+          (new ErrorResponse("Invalid reviewId", 400))
     }
   },
 
-  deleteReviews: async (req, res) => {
+  deleteReviews: async (req, res, next) => {
     try {
       const { serviceId } = req.params;
       const deleteAll = await Reviews
@@ -133,16 +121,12 @@ const ReviewController = {
           .json({ message: `deleted reviews for ${serviceId}` })
           .end();
       } else {
-        res
-          .status(404)
-          .json({ message: `There are no reviews for this service id` })
-          .end();
+        return next
+            (new ErrorResponse ("There are no reviews for this service id", 404))
       }
     } catch (err) {
-      res
-        .status(400)
-        .json({ message: `Invalid dish id` })
-        .end();
+      return next
+          (new ErrorResponse("invalid ServiceId", 400))
     }
   
   }

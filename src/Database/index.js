@@ -3,7 +3,6 @@ import dotenv from 'dotenv';
 
 dotenv.config();
 
-// const db = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASSWORD}@lydia.tcjkl.mongodb.net/test`
 const db = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASSWORD}@lydia.tcjkl.mongodb.net/myFirstDatabase?retryWrites=true&w=majority`
 
 const databaseConnection = {

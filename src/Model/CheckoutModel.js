@@ -7,7 +7,7 @@ const checkoutSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: 'user',
   },
-  item: [
+  service: [
     {
       serviceId: {
         type: Schema.Types.ObjectId,
@@ -16,11 +16,15 @@ const checkoutSchema = new Schema({
       name: {
         type: String,
       },
-      price: {
-        type: String,
-      },
     },
   ],
+  price: {
+    type: String,
+  },
+  status: {
+    type: String,
+    default: "pending"
+  }
 });
 
 let Checkout = mongoose.model('Checkout', checkoutSchema);

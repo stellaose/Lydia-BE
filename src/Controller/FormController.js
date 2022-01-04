@@ -1,4 +1,5 @@
 import Forms from '../Model/FormModel.js';
+import ErrorResponse from '../Utils/ErrorResponse.js';
 
 const FormController = {
     createForm: async (req, res) => {
@@ -21,19 +22,50 @@ const FormController = {
             console.log(err);
         }
     }, 
-    getForm: async (req, res) => {
+    getOneForm: async (req, res, next) => {
+        try{
+            const { formId } = req.params
+
+            const getForm = await Forms
+                                .findById({ _id: formId })
+                                // .populate()
+                                // .lean()
+                                .exec();
+
+            if(getForm !== null){
+                return res
+                        .status(200)
+                        .json({
+                        data: {
+                            getForm,
+                        },
+                            })
+                        .end();
+            }else {
+                return next
+                (new ErrorResponse("Invalid formId", 404))
+            }
+        }catch (err){
+            console.log(err)
+            return next
+            (new ErrorResponse("Server error", 500))
+        }
+    },
+
+    getForms: async (req, res) => {
         try {
             let form = await Forms.find().exec();
-            res
-            .status(200)
-            .json({ form })
-            .end();
-          } catch (err) {
+            return res
+                .status(200)
+                .json({ form })
+                .end();
+          } 
+          catch (err) {
             console.log(err);
-            res
-            .status(400)
-            .send({ message: `Invalid request` })
-            .end();
+            return res
+                .status(400)
+                .send({ message: `Invalid request` })
+                .end();
           }
     }
 }

@@ -15,13 +15,13 @@ describe('POST /', () => {
         expect(response.body.message).toBe('Please fill all fields')
     })
 
-    it('responds with json', async () => {
-        const response = await request.post('/user/register')
-        .send({email: 'stella@gmail.com', password: ''})
-        .set('Accept', 'application/json')
-        expect(response.status).toBe(400)
-        expect(response.body.message).toBe('Please fill all fields')
-    })
+    // it('responds with json', async () => {
+    //     const response = await request.post('/user/register')
+    //     .send({email: 'stella@gmail.com', password: ''})
+    //     .set('Accept', 'application/json')
+    //     expect(response.status).toBe(400)
+    //     expect(response.body.message).toBe('Please fill all fields')
+    // })
     
     it('should specify json in the content type header', async () => {
         const response = await request.post('/api/register')

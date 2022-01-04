@@ -1,12 +1,14 @@
 import Checkout from '../Model/CheckoutModel.js';
+import ErrorResponse from '../Utils/ErrorResponse.js';
+
 
 const CheckoutController = {
     postToCheckout: async (req, res) => {
         try {
           const { serviceId } = req.params;
-          const { user } = req;
+          const { userId } = req;
           
-          let findCheckout = await Checkout.findOne({ user: user._id });
+          let findCheckout = await Checkout.findOne({ userId: user._id });
       
           const isAdded = findCheckout.checkout
                                     .filter(service => service.service.toString() === serviceId)
@@ -14,9 +16,8 @@ const CheckoutController = {
           
       console.log(isAdded, "the item that exists") 
           if (isAdded) {
-            return res.
-                    status(401)
-                    .json("Service already exists in cart");
+            return next 
+            (new ErrorResponse('Service already exist in checkout', 401))
           }
 
             await findCheckout.save();
